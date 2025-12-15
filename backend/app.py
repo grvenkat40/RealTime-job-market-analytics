@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.analytics import top_skills, jobs_by_location, hiring_companies
-from backend.analytics import get_jobs
+from analytics import top_skills, jobs_by_location, hiring_companies
+from analytics import get_jobs
 from typing import Optional
 
 app = FastAPI(title="Job Market Analysis API")

@@ -1,4 +1,4 @@
-from backend.db import get_connections
+from db import get_connections
 
 def top_skills(limit = 10):
     conn = get_connections()
