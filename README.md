@@ -169,3 +169,4 @@ Deployed a decoupled cloud architecture with backend services on Render and Fron
 ## 🧠 Final Note
 This project demonstrate backend engineering, data engineering, cloud deployment and frontend integration
 in a single system -- designed and implemented ene-to-end.
+
