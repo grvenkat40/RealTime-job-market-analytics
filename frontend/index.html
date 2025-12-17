@@ -8,20 +8,40 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>📊Job Analysis Dashboard</h1>
-    <div class="card">
-        <h2>Top Hiring Locations</h2>
-        <canvas id="locationChart"></canvas>
-    </div>
-    <div class="card">
-        <h2>Top Hiring Companies</h2>
-        <canvas id="companyChart"></canvas>
-    </div>    
-    <div class="card">
-        <h2>Top Skills</h2>
-        <canvas id="skillChart"></canvas>
-    </div>
+    <header class="navbar">
+        <div class="logo">Job<span class="highlight">Pulse</span></div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Top Companies</a></li>
+                <li><a href="#">Top Locations</a></li>
+                <li><button id="toggleTheme">🌙</button></li>
+            </ul>
+        </nav>
+    </header>
+    <h1 id="heading">📊Job Analysis Dashboard</h1>
+    
+    <form id="jobform">
+        <input type="text" id="role" placeholder="Role (e.g. python developer)"/>
+        <input type="text" id="city" placeholder="City (e.g Bangalore)"/>
+        <button type="submit">Search Jobs</button>
+    </form>
+    <div id="status"></div>
 
+    <div class="graph">
+        <div class="card">
+            <h2>Top Hiring Locations</h2>
+            <canvas id="locationChart"></canvas>
+        </div>
+        <div class="card">
+            <h2>Top Hiring Companies</h2>
+            <canvas id="companyChart"></canvas>
+        </div>    
+        <div class="card">
+            <h2>Top Skills</h2>
+            <canvas id="skillChart"></canvas>
+        </div>
+    </div>
     <script src="static/js/dashbird.js"></script>
 </body>
 </html>

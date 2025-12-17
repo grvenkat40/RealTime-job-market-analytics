@@ -1,42 +1,80 @@
 import pandas as pd
 import json
 import re
+import random
 
-RAW_Path = "C:/job-market-analytics/data/raw/jobs_raw.json"
-CLEAN_Path = "C:/job-market-analytics/data/clean/jobs_clean.csv"
+# RAW_Path = "C:/job-market-analytics/data/raw/jobs_raw.json"
+# CLEAN_Path = "C:/job-market-analytics/data/clean/jobs_clean.csv"
 
-Skills_keywords = [
-    "python", "django", "flask", "fastapi", "sql", "mysql", "postgres",
-    "aws", "azure", "gcp", "pandas", "numpy", "git", "docker"
-]
+SKILL_KEYWORDS = {
+    "Data Engineer": [
+        "sql", "python", "spark", "pyspark", "hadoop", "airflow", 
+        "kafka", "aws", "azure", "gcp", "snowflake", "redshift", 
+        "bigquery", "etl", "elt", "databricks", "docker", "kubernetes"
+    ],
 
-def extract_skills(title):
-    if not isinstance(title, str):
+    "Python Developer": [
+        "python", "django", "flask", "fastapi", "sql", "orm", 
+        "sqlalchemy", "rest api", "git", "docker", "linux", 
+        "postgresql", "mysql", "redis", "celery", "pytest"
+    ],
+
+    "Data Analyst": [
+        "sql", "excel", "python", "pandas", "numpy", "tableau", 
+        "power bi", "looker", "statistics", "data visualization", 
+        "matplotlib", "seaborn", "r", "sas"
+    ],
+
+    "Frontend Developer": [
+        "javascript", "typescript", "react", "angular", "vue", 
+        "html", "css", "tailwind", "bootstrap", "redux", 
+        "nextjs", "webpack", "figma", "git"
+    ],
+
+    "DevOps Engineer": [
+        "linux", "aws", "azure", "docker", "kubernetes", "jenkins", 
+        "terraform", "ansible", "ci/cd", "bash", "shell scripting", 
+        "prometheus", "grafana", "git", "circleci"
+    ]
+}
+
+def extract_skills(text : str):
+    if not isinstance(text, str):
         return []
     
-    skills = []
-    for skill in Skills_keywords:
-        if re.search(rf"\b{skill}\b" , title.lower()):
-            skills.append(skill)
+    text = text.lower()
+    found_skills = []
+    for role_skill in SKILL_KEYWORDS.values():
+        for skill in role_skill:
+            if re.search(rf"\b{re.escape(skill)}\b" , text):
+                found_skills.append(skill)
     
-    return skills
+    return list(found_skills)
 
-def clean_data():
-    with open(RAW_Path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    
-    df = pd.DataFrame(data)
+def clean_data(raw_jobs:list[dict]) -> list[dict]:
+    seen = set()
+    cleaned = []
 
-    df['company'] = df["company"].str.strip()
-    df['location'] = df["location"].str.replace("\n"," ",regex=False).str.strip()
+    for job in raw_jobs:
+        title = job.get("title", "").strip()
+        company = job.get("company","").strip()
+        location = job.get("location","").replace("\n", " ").strip()
 
-    df.drop_duplicates(subset=['title', 'company', 'location'], inplace=True)
+        key = (title, company, location)
 
-    df["skills"] = df['title'].apply(extract_skills)
-    df.to_csv(CLEAN_Path, index=False)
+        if key in seen:
+            continue
+        seen.add(key)
 
-    # print(f'Cleaned data saved -> {CLEAN_Path}')
-    print(f'Total clean rows:{len(df)}')
+        skills = extract_skills(title)
 
-if __name__ == "__main__":
-    clean_data()
+        cleaned.append({
+            "title" : title,
+            "company" :company,
+            "location" :location,
+            "role" : job.get("role"),
+            "city" : job.get("city"),
+            "skills" : ",".join(skills),
+            "scraped_at" : job.get("scraped_at")
+        })
+    return cleaned

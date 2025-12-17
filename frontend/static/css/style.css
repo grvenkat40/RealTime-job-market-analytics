@@ -1,15 +1,165 @@
-body {
-    align-items: center;
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    padding: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+:root{
+    --bg: #f3f4f6;
+    --headerbg : rgba(255, 255, 255, 0.8);
+    --logo:#1e293b;
+    --logoSide:#2563eb;
+    --navLinkC:#64748b;
+    --alertbg:#0f172a;
+    --alertbg:rgb(236, 236, 236);
+    
+}
+.dark{
+    --bg: #0f172a;
+    --headerbg : rgba(255, 255, 255, 0.8);
+    --logo:#1e293b;
+    --logoSide:#eb5325;
+    --navLinkC:#64748b;
+    --alertTextC:white;
+    --alertbg:rgb(14, 13, 13);
+
+    
+
 }
 
-h1 {
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+body {
+    background: var(--bg);
+    align-items: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: var(--headerbg);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    position:sticky;
+    top: 0;
+    z-index: 1000;
+}
+.logo{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--logo);
+    letter-spacing: -0.5px;
+    cursor: pointer;
+    text-shadow: 0 0 10px var(--logo,0.2)
+}
+.logo .highlight{
+    color: var(--logoSide);
+    display: inline-block;
+    animation: glow 2s infinite ease-in-out ;
+}
+@keyframes glow {
+    0%{text-shadow: 0 0 10px var(--logoSide,0.2);
+        transform: scale(1);
+    }
+    50%{text-shadow: 0 0 10px var(--logoSide,0.6);
+        transform: scale(1.04);
+    }
+    100%{text-shadow: 0 0 10px var(--logoSide,0.2);
+        transform: scale(1);
+    }
+}
+.nav-links{
+    align-items: center;
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+.nav-links a{
+    text-decoration: none;
+    color: var(--navLinkC);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+    position: relative;
+}
+.nav-links a:hover,
+.nav-links a.active{
+    color: var(--logoSide);
+}
+.nav-links a::after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--logoSide);
+    transition: width 0.3s ease;
+}
+.nav-links a:hover::after{
+    width: 100%;
+}
+#toggleTheme{
+    font-size: larger;
+    padding: 6px;
+    font-weight: 700;
+    border: 1px solid var(--logo);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.08s ease-out;
+}
+#heading{
+    color: var(--logoSide);
+    margin-top: 50px;
     text-align: center;
     margin-bottom: 30px;
 }
+#jobform{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+input[type="text"]{
+    padding: 14px;
+    width: 30%;
+    border: 1px solid var(--logoSide);
+    border-radius: 8px;
+}
+button{
+    padding: 12px;
+    font-weight: 700;
+    border: 1px solid var(--logo);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.08s ease-out;
+}
+button:active{
+    transform: scale(.8);
+}
+button:hover{
+    background-color: var(--logoSide);
+}
+#status{
+    align-items: center;
+    margin: 20px;
+    color: var(--alertTextC);
+    background-color: var(--alertbg);
+    width: max-content;
+    padding: 10px;
+    border-radius: 8px;
+    opacity: 0.8;
 
+}
+.graph{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .card {
     background: white;
     width: 700px;

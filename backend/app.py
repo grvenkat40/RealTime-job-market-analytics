@@ -1,7 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
-from analytics import top_skills, jobs_by_location, hiring_companies
-from analytics import get_jobs
+
+from pipeline.extract.scraper import scrape_jobs
+from pipeline.transform.clean import clean_data
+from backend.analytics import (
+    top_skills, 
+    jobs_by_location, 
+    hiring_companies,
+    get_jobs
+)
+from backend.db import insert_jobs
 from typing import Optional
 
 app = FastAPI(title="Job Market Analysis API")
@@ -34,7 +42,28 @@ def jobs(
     page : int =1,
     limit : int =10,
     role :Optional[str] = None,
-    location : Optional[str] = None,
-    skill : Optional[str] = None
+    location : Optional[str] = None
 ):
-    return get_jobs(page, limit, role, location, skill)
+    return get_jobs(page, limit, role, location)
+
+
+@app.post("/scrape")
+def trigger_scrape(payload:dict, background_tasks : BackgroundTasks):
+    role = payload.get("role")
+    city = payload.get("city", "")
+
+    if not role:
+        return {"error": "role is required"}
+
+    def run_pipeline():
+        raw_jobs = scrape_jobs(role, city)
+        cleaned_jobs = clean_data(raw_jobs)
+        insert_jobs(cleaned_jobs)
+
+    background_tasks.add_task(run_pipeline)
+
+    return {
+        "status" : "started",
+        "role" : role,
+        "city" : city
+    }

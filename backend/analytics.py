@@ -1,4 +1,4 @@
-from db import get_connections
+from backend.db import get_connections
 
 def top_skills(limit = 10):
     conn = get_connections()
@@ -6,10 +6,9 @@ def top_skills(limit = 10):
 
     query = """
     SELECT skills, COUNT(*) as count
-    from 
-    jobs
+    from jobs
     WHERE skills IS NOT NULL AND skills != ""
-    GROUP BY skills
+    GROUP BY skill
     ORDER BY count DESC
     limit %s
     """
@@ -21,6 +20,7 @@ def top_skills(limit = 10):
     conn.close()
 
     return [{"skills":row[0], "count":row[1]} for row in data]
+    return []
 
 def jobs_by_location(limit = 10):
     conn = get_connections()
@@ -62,7 +62,7 @@ def hiring_companies(limit=10):
 def get_jobs(page = 1, limit = 10, role=None, location = None, skill= None):
     offset = (page-1)*limit
     conn = get_connections()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
     base_query = " SELECT * FROM jobs WHERE 1=1"
     params = []
