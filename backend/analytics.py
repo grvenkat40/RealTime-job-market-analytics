@@ -8,7 +8,7 @@ def top_skills(limit = 10):
     SELECT skills, COUNT(*) as count
     from jobs
     WHERE skills IS NOT NULL AND skills != ""
-    GROUP BY skill
+    GROUP BY skills
     ORDER BY count DESC
     limit %s
     """
