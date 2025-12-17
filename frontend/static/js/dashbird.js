@@ -17,7 +17,7 @@ jobform.addEventListener("submit", function(event){
 
 // Function to handle the actual API communication
 function triggerScrape(role, city){
-    const  TEST_BASE = "http://127.0.0.1:8000";
+    const  TEST_BASE = "https://realtime-job-market-analytics.onrender.com";
     const SCRAPE_URL = `${TEST_BASE}/scrape`;
     statusdiv.textContent = "Searching for jobs... Please wait.";
 
@@ -39,7 +39,7 @@ function triggerScrape(role, city){
     })
     .then(data =>{
         statusdiv.textContent = "Scraping in progress… updating dashboard shortly.";
-        setInterval(refreshCharts, 10000);
+        setTimeout(refreshCharts, 10000);
     })
     .catch(error =>{
         statusdiv.textContent = `Error during search: ${error.message}`;
