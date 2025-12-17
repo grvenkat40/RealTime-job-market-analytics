@@ -53,10 +53,12 @@ Database (TiDB Cloud – MySQL Compatible)
 - JavaScript
 - Chart.js
   
-**Deployment**
-- Render -> Backend API
-- Netlify -> Frondend
-- GitHub -> Version control
+## 🌐 Live Deployment
+- Backend API: Render   (https://realtime-job-market-analytics.onrender.com/)
+- Fronend Dashboard : Netlify   (https://realtime-job-market-analytics.netlify.app/)
+- Database : TiDB cloud
+  
+The frontend communicates with the backend via REST APIs, following a fully decoupled deployment model.
 
 ## 📂 Project Structure
 ```text
@@ -126,11 +128,6 @@ Paginated Job Listings
 ```text
 GET /jobs?page=1&limit=10&role=python&location=india
 ```
-## 🌐 Live Deployment
-- Backend API: Render
-- Fronend Dashboard : Netlify
-- Database : TiDB cloud
-The frontend communicates with the backend via REST APIs, following a fully decoupled deployment model.
 
 ## 🔐 Design Decisions
 * Scraping runs only on demand, not continuously
@@ -169,4 +166,5 @@ Deployed a decoupled cloud architecture with backend services on Render and Fron
 ## 🧠 Final Note
 This project demonstrate backend engineering, data engineering, cloud deployment and frontend integration
 in a single system -- designed and implemented ene-to-end.
+
 
