@@ -59,7 +59,7 @@ function refreshCharts(){
 // const API_BASE  = "https://realtime-job-market-analytics.onrender.com/analytics"
 
 function loadLocationCharts(){
-    fetch(`${API_BASE}/locations`)
+    fetch(`${API_BASE}/analytics/locations`)
         .then(res => res.json())
         .then(data => {
             new Chart(document.getElementById("locationChart"),{
@@ -75,7 +75,7 @@ function loadLocationCharts(){
     }
 
 function loadCompanyCharts(){
-    fetch(`${API_BASE}/companies`)
+    fetch(`${API_BASE}/analytics/companies`)
         .then(res => res.json())
         .then(data => {
             new Chart(document.getElementById('companyChart'), {
@@ -91,7 +91,7 @@ function loadCompanyCharts(){
 }
 
 function loadSkillsCharts(){
-    fetch(`${API_BASE}/skills`)
+    fetch(`${API_BASE}/analytics/skills`)
         .then(res => res.json())
         .then(data => {
             new Chart(document.getElementById("skillChart"), {
