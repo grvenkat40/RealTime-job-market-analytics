@@ -1,6 +1,8 @@
 const jobform = document.getElementById("jobform");
 const statusdiv = document.getElementById("status");
 
+const API_BASE = "https://realtime-job-market-analytics.onrender.com";
+
 jobform.addEventListener("submit", function(event){
     event.preventDefault();
 
@@ -17,8 +19,8 @@ jobform.addEventListener("submit", function(event){
 
 // Function to handle the actual API communication
 function triggerScrape(role, city){
-    const  TEST_BASE = "https://realtime-job-market-analytics.onrender.com";
-    const SCRAPE_URL = `${TEST_BASE}/scrape`;
+    // const  TEST_BASE = "https://realtime-job-market-analytics.onrender.com";
+    const SCRAPE_URL = `${API_BASE}/scrape`;
     statusdiv.textContent = "Searching for jobs... Please wait.";
 
     fetch(SCRAPE_URL,{
@@ -54,7 +56,7 @@ function refreshCharts(){
     statusdiv.textContent = "Dashboard updated with latest data.";
 }
 
-const API_BASE  = "https://realtime-job-market-analytics.onrender.com/analytics"
+// const API_BASE  = "https://realtime-job-market-analytics.onrender.com/analytics"
 
 function loadLocationCharts(){
     fetch(`${API_BASE}/locations`)
