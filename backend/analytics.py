@@ -20,7 +20,6 @@ def top_skills(limit = 10):
     conn.close()
 
     return [{"skills":row[0], "count":row[1]} for row in data]
-    return []
 
 def jobs_by_location(limit = 10):
     conn = get_connections()
