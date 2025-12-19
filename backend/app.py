@@ -1,6 +1,5 @@
 from fastapi import FastAPI,BackgroundTasks, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import os
 
 from pipeline.extract.scraper import scrape_jobs
 from pipeline.transform.clean import clean_data
@@ -47,12 +46,12 @@ def jobs(
 ):
     return get_jobs(page, limit, role, location)
 
-API_KEY = os.getenv("API_KEY")
+# API_KEY = os.getenv("API_KEY")
 
 @app.post("/scrape")
-def trigger_scrape(payload:dict, background_tasks : BackgroundTasks, x_api_key = Header(None)):
-    if x_api_key != API_KEY:
-        raise HTTPException(status_code=403, detail="Invalid API Key")
+def trigger_scrape(payload:dict, background_tasks : BackgroundTasks):
+    # if x_api_key != API_KEY:
+    #     raise HTTPException(status_code=403, detail="Invalid API Key")
 
     role = payload.get("role")
     city = payload.get("city", "")

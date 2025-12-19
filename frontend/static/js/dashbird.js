@@ -33,13 +33,13 @@ function triggerScrape(role, city){
     const SCRAPE_URL = `${API_BASE}/scrape`;
     statusdiv.textContent = "Searching for jobs... Please wait.";
 
-    const API_KEY = "venkat2040gr@2005";
+    // const API_KEY = "venkat2040gr@2005";
 
     fetch(SCRAPE_URL,{
         method:"POST",
         headers : {
-            "Content-Type":"application/json",
-            "X_API_KEY":API_KEY
+            "Content-Type":"application/json"
+            // "X_API_KEY":API_KEY
         },
         body : JSON.stringify({
             role:role,
