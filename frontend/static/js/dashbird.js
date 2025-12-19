@@ -6,15 +6,25 @@ const API_BASE = "https://realtime-job-market-analytics.onrender.com";
 jobform.addEventListener("submit", function(event){
     event.preventDefault();
 
-    const roleInput = document.getElementById("role").value;
-    const cityInput = document.getElementById("city").value;
+    const role = document.getElementById("role").value;
+    const city = document.getElementById("city").value;
 
-    if(!roleInput){
+    if(!role){
         statusdiv.textContent = "Please enter a job role.";
         return;
     }
     // --- Send Data to Backend ---
-    triggerScrape(roleInput, cityInput);
+    triggerScrape(role, city);
+});
+document.querySelectorAll(".preset").forEach(btn =>{
+    btn.addEventListener("click", ()=>{
+        const role = btn.dataset.role;
+        const city = btn.dataset.city;
+
+        document.getElementById("role").value = role;
+        document.getElementById("city").value = city;
+        triggerScrape(role, city);
+    });
 });
 
 // Function to handle the actual API communication
@@ -23,10 +33,13 @@ function triggerScrape(role, city){
     const SCRAPE_URL = `${API_BASE}/scrape`;
     statusdiv.textContent = "Searching for jobs... Please wait.";
 
+    const API_KEY = "venkat2040gr@2005";
+
     fetch(SCRAPE_URL,{
         method:"POST",
         headers : {
-            "Content-Type":"application/json"
+            "Content-Type":"application/json",
+            "X_API_KEY":API_KEY
         },
         body : JSON.stringify({
             role:role,
@@ -49,6 +62,10 @@ function triggerScrape(role, city){
     });
 }
 
+let = locationChartInstance = null;
+let = companyChartInstance = null;
+let = skillsChartInstance = null;
+
 function refreshCharts(){
     loadLocationCharts();
     loadCompanyCharts();
@@ -62,7 +79,10 @@ function loadLocationCharts(){
     fetch(`${API_BASE}/analytics/locations`)
         .then(res => res.json())
         .then(data => {
-            new Chart(document.getElementById("locationChart"),{
+            if(locationChartInstance){
+                locationChartInstance.destroy();
+            }
+            locationChartInstance = new Chart(document.getElementById("locationChart"),{
                 type:'bar',
                 data:{
                     labels:data.map(d => d.location),
@@ -78,7 +98,10 @@ function loadCompanyCharts(){
     fetch(`${API_BASE}/analytics/companies`)
         .then(res => res.json())
         .then(data => {
-            new Chart(document.getElementById('companyChart'), {
+            if(companyChartInstance){
+                companyChartInstance.destroy();
+            }
+            companyChartInstance = new Chart(document.getElementById('companyChart'), {
                 type :'bar',
                 data:{
                     labels : data.map(d => d.company),
@@ -94,7 +117,10 @@ function loadSkillsCharts(){
     fetch(`${API_BASE}/analytics/skills`)
         .then(res => res.json())
         .then(data => {
-            new Chart(document.getElementById("skillChart"), {
+            if(skillsChartInstance){
+                skillsChartInstance.destroy();
+            }
+            skillsChartInstance = new Chart(document.getElementById("skillChart"), {
                 type:'bar',
                 data:{
                     labels:data.map(d => d.skills),

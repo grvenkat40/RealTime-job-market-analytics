@@ -13,8 +13,8 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="#">Top Companies</a></li>
-                <li><a href="#">Top Locations</a></li>
+                <li><a href="https://realtime-job-market-analytics.onrender.com/analytics/companies">Top Companies</a></li>
+                <li><a href="https://realtime-job-market-analytics.onrender.com/analytics/locations">Top Locations</a></li>
                 <li><button id="toggleTheme">🌙</button></li>
             </ul>
         </nav>
@@ -27,7 +27,21 @@
         <button type="submit">Search Jobs</button>
     </form>
     <div id="status"></div>
-
+    <h3 style="text-align: center;">Quick Search Suggestions</h3>
+    <div id="quick-search">
+        <button class="preset" data-role = "python developer" data-city="bangalore">
+            Python - bangalore
+        </button>
+        <button class="preset" data-role="data engineer" data-city="remote">
+            Data Engineer - remote
+        </button>
+        <button class="preset" data-role="Frontend developer" data-city="Hyderabad">
+            Frontend - Hyderabad
+        </button>
+        <button class="preset" data-role="devops engineer" data-city="delhi">
+            DevOps - Delhi
+        </button>
+    </div>
     <div class="graph">
         <div class="card">
             <h2>Top Hiring Locations</h2>

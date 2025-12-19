@@ -1,25 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 :root{
     --bg: #f3f4f6;
-    --headerbg : rgba(255, 255, 255, 0.8);
-    --logo:#1e293b;
+    --headerbg : #0f172a;
+    --logo:#f2f4f8;
     --logoSide:#2563eb;
-    --navLinkC:#64748b;
+    --navLinkC:#eff3f8;
     --alertbg:#0f172a;
     --alertbg:rgb(236, 236, 236);
+    --quickSugbtn:var(--logoSide);
+    --quickSugtxt:var(--logo);
+    --hoverpresetbtn:#487ef1;
+    --quickh3:black;
     
 }
 .dark{
     --bg: #0f172a;
     --headerbg : rgba(255, 255, 255, 0.8);
     --logo:#1e293b;
-    --logoSide:#eb5325;
+    --logoSide:#f57c57;
     --navLinkC:#64748b;
     --alertTextC:rgb(5, 5, 5);
     --alertbg:rgb(236, 236, 236);
-
-    
-
+    --quickSugbtn:var(--logoSide);
+    --quickSugtxt:var(--logo);
+    --hoverpresetbtn:#fd5d2c;
+    --quickh3:rgb(255, 255, 255);
 }
 
 
@@ -41,6 +46,7 @@ body {
     align-items: center;
     padding: 1rem 5%;
     background-color: var(--headerbg);
+    width: 100%;
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     position:sticky;
@@ -132,7 +138,7 @@ input[type="text"]{
 button{
     padding: 12px;
     font-weight: 700;
-    border: 1px solid var(--logo);
+    border: 1px solid var(--logoSide);
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.08s ease-out;
@@ -152,8 +158,71 @@ button:hover{
     padding: 10px;
     border-radius: 8px;
     opacity: 0.8;
-
+} 
+h3{
+    color: var(--quickh3);
 }
+#quick-search {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    animation: fadeInUp 1s ease-out;
+}
+@keyframes fadeInUp {
+    from{
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+}
+.preset {
+    background: var(--quickSugbtn);
+    color: var(--quickSugtxt);
+    border: none;
+    margin: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 2s ease;
+    animation: floaty 1.8s ease infinite;
+}
+.preset:hover {
+    /* Fixed: unitless scale */
+    transform: scale(1.1); 
+    background-color: var(--hoverpresetbtn);
+    animation-play-state: paused; 
+}
+@keyframes floaty{
+    0%{
+        transform: translateY(0);
+        animation-delay: 0s;
+    }
+    50%{
+        transform: translateY(-4px);
+        animation-delay: 0.5s;
+    }
+    100%{
+        transform: translateY(0);
+        animation-delay: 0s;
+    }
+    
+}
+.preset:nth-child(2){
+    animation-delay: 0.2s;
+}
+.preset:nth-child(3){
+    animation-delay: 0.4s;
+}
+.preset:nth-child(4){
+    animation-delay: 0.6s;
+}
+
 .graph{
     display: flex;
     flex-direction: column;
